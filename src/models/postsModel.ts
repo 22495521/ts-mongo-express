@@ -38,7 +38,8 @@ const postsSchema = new Schema<Posts>({
     },
     content: {
         type: String,
-        required: [true, 'Content 未填寫']
+        required: [true, 'Content 未填寫'],
+        trim: true
     },
     likes: {
         type: Number,
