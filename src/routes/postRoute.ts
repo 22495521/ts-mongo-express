@@ -2,6 +2,8 @@ import { Router } from 'express';
 const router = Router();
 
 import * as posts from '@/controllers/posts';
-router.get('/', posts.getPostsList);
-router.post('/', posts.createPostsList);
+router.get('/posts', posts.getPostsList);
+router.post('/posts', posts.createPostsList);
+router.delete('/posts', posts.deleteAllPostsList);
+router.delete('/post/:id', posts.deleteOnePostsList);
 export default router;
