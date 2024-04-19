@@ -6,7 +6,6 @@ declare global {
             PORT: number;
 
             DATABASE: string;
-            DATABASE_PASSWORD: string;
 
             NODE_ENV: 'development' | 'production';
         }

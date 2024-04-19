@@ -6,9 +6,9 @@ export const sendNotFoundError: RequestHandler = (_req, res) => {
     });
 };
 
-export const catchCustomError: ErrorRequestHandler = (_err, _req, res, _next) => {
+export const catchCustomError: ErrorRequestHandler = (err, _req, res, _next) => {
     return res.status(500).send({
         status: false,
-        message: '伺服器錯誤'
+        message: err || '伺服器錯誤'
     });
 };

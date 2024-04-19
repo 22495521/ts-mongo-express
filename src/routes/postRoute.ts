@@ -1,10 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 
-router.get('/', (_req, res) => {
-    res.status(200).json({
-        message: '成功喔'
-    });
-});
-
+import * as posts from '@/controllers/posts';
+router.get('/', posts.getPostsList);
+router.post('/', posts.createPostsList);
 export default router;

@@ -3,6 +3,9 @@ import cors from 'cors';
 import 'dotenv/config';
 import Routes from '@/routes';
 import * as exception from '@/app/exception';
+import { connectDB } from './connectDB';
+
+connectDB();
 
 const app = express();
 app.use(express.json());
