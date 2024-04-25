@@ -1,6 +1,6 @@
 import postsModel from '@/models/postsModel';
 import { Request, Response, NextFunction } from 'express';
-import { AppError } from '@/service/AppError';
+// import { AppError } from '@/service/AppError';
 
 export const getPostsList = async (_req: Request, res: Response, next: NextFunction) => {
     try {
