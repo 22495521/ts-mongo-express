@@ -7,8 +7,11 @@ export const sendNotFoundError: RequestHandler = (_req, res) => {
 };
 
 export const catchCustomError: ErrorRequestHandler = (err, _req, res, _next) => {
-    return res.status(500).send({
+    console.log(err);
+    const status = err.statusCode || 500;
+    const message = err.message || '伺服器錯誤，請聯絡管理員';
+    return res.status(status).send({
         status: false,
-        message: err || '伺服器錯誤'
+        message
     });
 };

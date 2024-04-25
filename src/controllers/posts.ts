@@ -1,5 +1,6 @@
 import postsModel from '@/models/postsModel';
 import { Request, Response, NextFunction } from 'express';
+import { AppError } from '@/service/AppError';
 
 export const getPostsList = async (_req: Request, res: Response, next: NextFunction) => {
     try {
@@ -17,9 +18,10 @@ export const createPostsList = async (req: Request, res: Response, next: NextFun
     try {
         const { body } = req;
         const result = await postsModel.create({ ...body });
+        const resultRes = await postsModel.findOne({ _id: result.id }, { __v: false });
         res.status(200).json({
             status: 'success',
-            data: result
+            data: resultRes
         });
     } catch (error) {
         next(error);
@@ -41,6 +43,12 @@ export const deleteAllPostsList = async (_req: Request, res: Response, next: Nex
 export const deleteOnePostsList = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
+        try {
+            await postsModel.findById(id);
+        } catch (error) {
+            AppError('id參數錯誤', 400, next);
+            return;
+        }
         const result = await postsModel.deleteOne({ _id: id });
         res.status(200).json({
             status: 'success',
@@ -54,15 +62,24 @@ export const deleteOnePostsList = async (req: Request, res: Response, next: Next
 export const editOnePostsList = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
+        try {
+            await postsModel.findById(id);
+        } catch (error) {
+            AppError('id參數錯誤', 400, next);
+            return;
+        }
         const { body } = req;
         const result = await postsModel.findOneAndUpdate(
             { _id: id },
             { ...body },
             //回傳資料
             {
-                new: true
+                new: true,
+                runValidators: true
+                // fields: '__v'
             }
         );
+
         res.status(200).json({
             status: 'success',
             data: result
